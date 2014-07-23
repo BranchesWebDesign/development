@@ -1,0 +1,10 @@
+#Sets all 404 page errors to be redirected to our custom error page.
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+
+RewriteCond %{HTTP_HOST} ^brancheswebsolutions.com$
+
+# Redirects brancheswebsolutions.com to www.brancheswebsolutions.com
+RewriteRule (.*) http://www.brancheswebsolutions.com/$1 [R=301,NC]
+

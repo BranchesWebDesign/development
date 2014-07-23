@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /cache/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /js/
+Disallow: /prettyPhoto/
+Disallow: /client-portal/
+Disallow: /tmp/
+Disallow: /blog/cgi-bin/*
+Disallow: /blog/wp-admin/*
+Disallow: /blog/wp-content/*
+Disallow: /blog/wp-includes/*
+Sitemap: http://www.brancheswebsolutions.com/sitemap.xml

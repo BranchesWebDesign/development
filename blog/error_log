@@ -1,0 +1,39 @@
+[03-Feb-2014 07:58:48 UTC] PHP Parse error:  syntax error, unexpected 'GoogleAnalyticsObject' (T_STRING) in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-includes/class-oembed.php on line 154
+[03-Feb-2014 07:59:41 UTC] PHP Parse error:  syntax error, unexpected 'GoogleAnalyticsObject' (T_STRING) in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-includes/class-oembed.php on line 154
+[03-Feb-2014 08:01:14 UTC] PHP Parse error:  syntax error, unexpected 'GoogleAnalyticsObject' (T_STRING) in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-includes/class-oembed.php on line 154
+[03-Feb-2014 08:02:05 UTC] PHP Parse error:  syntax error, unexpected 'GoogleAnalyticsObject' (T_STRING) in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-includes/class-oembed.php on line 154
+[03-Feb-2014 08:02:18 UTC] PHP Parse error:  syntax error, unexpected 'GoogleAnalyticsObject' (T_STRING) in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-includes/class-oembed.php on line 154
+[03-Feb-2014 08:05:12 UTC] PHP Parse error:  syntax error, unexpected 'GoogleAnalyticsObject' (T_STRING) in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-includes/class-oembed.php on line 154
+[03-Feb-2014 08:05:41 UTC] PHP Parse error:  syntax error, unexpected 'GoogleAnalyticsObject' (T_STRING) in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-includes/class-oembed.php on line 154
+[03-Feb-2014 08:12:42 UTC] PHP Parse error:  syntax error, unexpected 'GoogleAnalyticsObject' (T_STRING) in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-includes/class-oembed.php on line 154
+[17-Apr-2014 06:02:10 UTC] WordPress database error Table 'branchiz_wor2.bestcjdb' doesn't exist for query SELECT count(id) FROM bestcjdb made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), include_once('/plugins/auto-content-poster/acp.php'), ACP_checkdb
+[17-Apr-2014 06:04:39 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[17-Apr-2014 18:06:08 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[18-Apr-2014 06:09:46 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[18-Apr-2014 18:31:49 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[19-Apr-2014 06:04:47 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[19-Apr-2014 18:13:48 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[20-Apr-2014 06:21:41 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[20-Apr-2014 18:22:26 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[21-Apr-2014 06:09:43 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[21-Apr-2014 18:07:14 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[22-Apr-2014 06:05:46 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[22-Apr-2014 18:08:24 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[23-Apr-2014 06:19:11 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[23-Apr-2014 18:05:38 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[24-Apr-2014 06:05:56 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[24-Apr-2014 18:12:00 UTC] PHP Warning:  ACPposter(): Node no longer exists in /home1/branchiz/public_html/brancheswebsolutions/blog/wp-content/plugins/auto-content-poster/acp.php on line 210
+[05-Jul-2014 15:05:18 UTC] WordPress database error Query execution was interrupted for query SELECT * FROM apy_posts WHERE ID = 64 LIMIT 1 made by do_action_ref_array, call_user_func_array, wp_cron_preload_cache, clear_post_supercache, get_current_url_supercache_dir, get_permalink, get_post, WP_Post::get_instance
+[11-Jul-2014 15:08:52 UTC] WordPress database error Lost connection to MySQL server during query for query SELECT option_value FROM apy_options WHERE option_name = 'wp_mobile_disable' LIMIT 1 made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('setup_theme'), call_user_func_array, jetpack_mobile_theme_setup, jetpack_check_mobile, get_option
+[18-Jul-2014 14:40:53 UTC] WordPress database error Lost connection to MySQL server during query for query SELECT option_value FROM apy_options WHERE option_name = 'wp_mobile_app_promos' LIMIT 1 made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('plugins_loaded'), call_user_func_array, Jetpack::load_modules, require('/plugins/jetpack/modules/minileven.php'), jetpack_load_minileven, get_option
+[20-Jul-2014 04:27:51 UTC] WordPress database error Unknown column 'post' in 'where clause' for query 
+				SELECT *
+				FROM apy_posts
+				LEFT JOIN apy_term_relationships ON (apy_posts.ID = apy_term_relationships.object_id)
+				WHERE 1=1
+				  AND ((post_date >= '1987-03-05 00:27:51'
+				        AND post_date <= '2014-07-13 00:27:51')) AND apy_posts.post_type IN (post)
+					  AND (apy_posts.post_status = 'publish')
+					GROUP BY apy_posts.ID
+					ORDER BY RAND() DESC LIMIT 0,1
+			 made by do_action_ref_array, call_user_func_array, CWP_TOP_Core->tweetOldPost, CWP_TOP_Core->getTweetsFromDB

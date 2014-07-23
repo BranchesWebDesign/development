@@ -1,0 +1,29 @@
+REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Microsoft\Office\Outlook\OMI Account Manager\Accounts\contact_us@branchiz.com]
+"DCEmail"=dword:00000002
+"IMAP Server"="mail.branchiz.com"
+"IMAP Port"=dword:0000008f
+"SMTP Server"="mail.branchiz.com"
+"SMTP Port"=dword:0000001a
+"Connection Type"=dword:00000003
+"IMAP User Name"="contact_us@branchiz.com"
+"SMTP Display Name"="contact_us@branchiz.com"
+"SMTP Email Address"="contact_us@branchiz.com"
+"SMTP Reply To Email Address"="contact_us@branchiz.com"
+"SMTP Organization Name"=""
+"Account Name"="contact_us@branchiz.com"
+"IMAP Timeout"=dword:0000003c
+"SMTP Timeout"=dword:0000003c
+"IMAP Secure Connection"=dword:00000000
+"IMAP Skip Account"=dword:00000000
+"IMAP Prompt for Password"=dword:00000001
+"SMTP User Name"="contact_us@branchiz.com"
+"SMTP Use Sicily"=dword:00000002
+"SMTP Secure Connection"=dword:00000000
+"SMTP Split Messages"=dword:00000000
+"SMTP Prompt for Password"=dword:00000000
+"IMAP Root Folder"=""
+"IMAP Polling"=dword:00000001
+"IMAP Poll All Folders"=dword:00000001
+"IMAP Dirty"=dword:00000000

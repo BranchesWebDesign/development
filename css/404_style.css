@@ -1,0 +1,22 @@
+#404container{
+	padding:25px;
+	background-repeat:no-repeat;
+}
+
+#links{
+	color:#fff;
+	padding-top:450px;
+	text-align:center;
+	font-family: 'BebasNeueRegular',Arial, Helvetica, sans-serif;
+	font-size:26px;
+}
+
+#links a:link{
+margin-right:7px;
+}
+
+#links a:hover{
+margin-right:7px;
+color:#fe0d01;
+
+}
