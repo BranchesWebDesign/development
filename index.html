@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 
 <html>
 
@@ -48,7 +48,7 @@
 
 <meta name="apple-mobile-web-app-status-bar-style" content="grey">
 
-<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <meta name="robots" content="noodp">
 
@@ -86,17 +86,15 @@
 
 <link rel="bookmark icon" href="http://www.brancheswebsolutions.com/images/favicon.png" />
 
-<link rel="publisher" href="https://plus.google.com/+Brancheswebsolutionstodesigns"/>
+<link rel="publisher" href="https://plus.google.com/+Brancheswebsolutionstodesigns" />
 
-<link rel="author" href="https://plus.google.com/+Brancheswebsolutionstodesigns"/>
+<link rel="author" href="https://plus.google.com/+Brancheswebsolutionstodesigns" />
 
-<link rel="publisher" href="https://plus.google.com/+Brancheswebsolutionstodesigns"/>
+<link rel="publisher" href="https://plus.google.com/+Brancheswebsolutionstodesigns" />
 
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53ae2d0d5f1e8d44"></script>
-
-<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
 
 <script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>
 
@@ -210,13 +208,15 @@
 
 	<!-- Start Slider -->
 
-	<div id="slider" class="nivoSlider"> <img id="slider_img1" class="cms-editable" src="images/slider-banners/slider01.jpg" alt="Welcome to Branches Web Solutions" title="Branches Web Design | Harrisburg, Pennsylvania" /> <img id="slider_img2" class="cms-editable" src="images/slider-banners/slider02.jpg" alt="Social Media" title="Follow Branches Web Design" /> <img id="slider_img3" class="cms-editable" src="images/slider-banners/slider03.jpg" alt="Cheap Professional web design" title="Professional Web Design" /> </div>
-
+	<div class="slider-wrapper theme-default">
+			<div id="slider" class="nivoSlider"><img id="slider_img1" style="height:339px;width:986px;" src="images/slider-banners/slider01.jpg" data-transition="slideInRight" data-thumb="images/slider-banners/slider01.jpg" data-thumb="images/slider-banners/slider02.jpg" alt="Welcome to Branches Web Solutions" title="Branches Web Design | Harrisburg, Pennsylvania" /><img id="slider_img2" style="height:339px;width:986px;" data-transition="slideInLeft" class="cms-editable" src="images/slider-banners/slider02.jpg" data-thumb="images/slider-banners/slider02.jpg" alt="Social Media" title="Follow Branches Web Design" /><img id="slider_img3" data-transition="slideInLeft" data-thumb="images/slider-banners/slider03.jpg" src="images/slider-banners/slider03.jpg" alt="Cheap Professional web design" title="Professional Web Design" /></div>
+</div>
 	<!-- End Slider -->
 
 	<!-- Start Slider HTML Captions -->
-
-	<div id="htmlcaption" class="nivo-html-caption"> <span id="caption1_text"><a id="caption1_link" href="about-us.html" title="Branches Web Design | Harrisburg, Pennsylvania">Learn More</a></span> <span id="caption2_text"><a id="caption2_link" href="contact-us.html" title="Branches Web Design">Learn More</a></span> <span id="caption3_text"><a id="caption3_link" href="services.html" title="Branches Web Design">Learn More</a></span> </div>
+<div id="htmlcaption" class="nivo-html-caption">
+               
+            </div>
 
 	<!-- End Slider HTML Captions -->
 
@@ -545,7 +545,13 @@
 <!-- End Scroll To Top Div -->
 
 </span></span></span>
-
+<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+        $('#slider').nivoSlider();
+    });
+    </script>
 </body>
 
 </html>
