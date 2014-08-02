@@ -67,9 +67,9 @@ function DNUI_getAllPostMeta($id) {
 
 //Make update of wp_postmeta with a vector sizes serialized the one image 
 function DNUI_updateImages($value, $id) {
-    global $wpdb, $table_prefix;
+    global $wpdb;
     $value = str_replace("'", "''", $value);
-    $sql = 'update ' . $table_prefix . "postmeta set meta_value='" . ($value) . "' where meta_id='$id'";
+    $sql = 'update ' . $wpdb->prefix . "postmeta set meta_value='" . ($value) . "' where meta_id='$id'";
     return $wpdb->query($sql);
 }
 
@@ -88,8 +88,9 @@ function DNUI_checkList($images) {
     return $images;
 }
 
-function DNUI_delete($imagesToDelete, $options, $backup = false) {
+function DNUI_delete($imagesToDelete, $options) {
     $updateInServer = $options['updateInServer'];
+    $backup = $options["backup"];
     $base = wp_upload_dir();
     $base = $base['basedir'];
     $errors = array();
@@ -102,11 +103,14 @@ function DNUI_delete($imagesToDelete, $options, $backup = false) {
         $imageName = array_pop($tmp);
         $folder = implode("/", $tmp);
         if ($backup) {
-            $dirBackup = $basePlugin . '/' . $folder . '/' . $imageToDelete["id"];
+
+            $dirBase = $base . '/' . $folder . '/';
+            $dirBackup = $basePlugin . '/' . $imageToDelete["id"];
             $backupExist = file_exists($dirBackup . '/' . $imageToDelete["id"] . '.backup');
             if (!$backupExist) {
                 $backupInfo = array();
-                $backupInfo["post"] = DNUI_getAllPost($imageToDelete["id"]);
+                $backupInfo["dirBase"] = $dirBase;
+                $backupInfo["posts"] = DNUI_getAllPost($imageToDelete["id"]);
                 $backupInfo["postMeta"] = DNUI_getAllPostMeta($imageToDelete["id"]);
                 if (!file_exists($dirBackup)) {
                     mkdir($dirBackup, 0755, true);
@@ -115,21 +119,22 @@ function DNUI_delete($imagesToDelete, $options, $backup = false) {
         }
 
         if ($imageToDelete["toDelete"][0] == "original") {
-            wp_delete_attachment($imageToDelete["id"]);
             if ($backup) {
-                copy($base . '/' . $imageName, $dirBackup . '/' . $imageName);
+                $dirImage = $dirBase . $imageName;
+                DNUI_copy($dirImage, $dirBackup . '/' . $imageName);
                 foreach ($image["sizes"] as $size => $imageSize) {
-                    $dirImage = $base . '/' . $folder . '/' . $imageSize["file"];
-                    copy($dirImage, $dirBackup . '/' . $imageSize["file"]);
+                    $dirImage = $dirBase . $imageSize["file"];
+                    DNUI_copy($dirImage, $dirBackup . '/' . $imageSize["file"]);
                 }
             }
+            wp_delete_attachment($imageToDelete["id"]);
         } else {
 
 
             foreach ($imageToDelete["toDelete"] as $keyS => $imageS) {
                 $size = $image["sizes"][$imageS];
                 clearstatcache();
-                $dirImage = $base . '/' . $folder . '/' . $size["file"];
+                $dirImage = $dirBase . $size["file"];
                 if (!empty($size)) {
 
                     if (!file_exists($dirImage)) {
@@ -138,7 +143,7 @@ function DNUI_delete($imagesToDelete, $options, $backup = false) {
                         }
                     } else {
                         if ($backup) {
-                            copy($dirImage, $dirBackup . '/' . $size["file"]);
+                            DNUI_copy($dirImage, $dirBackup . '/' . $size["file"]);
                         }
                         if (@unlink($dirImage)) {
                             unset($image["sizes"][$imageS]);
@@ -159,6 +164,12 @@ function DNUI_delete($imagesToDelete, $options, $backup = false) {
     return $errors;
 }
 
+function DNUI_copy($source, $dest) {
+    if (file_exists($source)) {
+        copy($source, $dest);
+    }
+}
+
 function DNUI_get_all_dir_or_files($dir, $type) {
     if ($type == 0) {
         return DNUI_get_dirs(array($dir));
@@ -175,21 +186,83 @@ function DNUI_get_all_dir_or_files($dir, $type) {
     return array();
 }
 
+function DNUI_get_backup() {
+    $basePlugin = plugin_dir_path(__FILE__) . '../backup/';
+    $urlBase = plugin_dir_url(__FILE__) . '../backup/';
+
+    $out = array();
+    $backups = DNUI_scan_dir($basePlugin);
+    foreach ($backups as $backup) {
+        $file = DNUI_scan_dir($basePlugin . $backup);
+        array_push($out, array('id' => $backup, 'urlBase' => $urlBase, 'files' => $file));
+    }
+    return $out;
+}
+
+function DNUI_cleanup_backup() {
+    $basePlugin = plugin_dir_path(__FILE__) . '../backup/';
+
+    $backups = DNUI_scan_dir($basePlugin);
+    $transform = array();
+    foreach ($backups as $id) {
+        array_push($transform, array("backup" => $id));
+    }
+    DNUI_delete_backup($transform);
+
+    return;
+}
+
+function DNUI_delete_backup($ids) {
+    $basePlugin = plugin_dir_path(__FILE__) . '../backup/';
+    foreach ($ids as $id) {
+        $backFiles = DNUI_scan_dir($basePlugin . $id["backup"] . '/');
+        foreach ($backFiles as $file) {
+            @unlink($basePlugin . $id["backup"] . '/' . $file);
+        }
+        rmdir($basePlugin . $id["backup"] . '/');
+    }
+    return;
+}
+
+function DNUI_restore_backup($ids) {
+    global $wpdb;
+    $basePlugin = plugin_dir_path(__FILE__) . '../backup/';
+
+    foreach ($ids as $id) {
+        $backFiles = DNUI_scan_dir($basePlugin . $id["backup"] . '/', 1);
+        $fileImages = preg_grep("/^(?!.*\.backup)/", $backFiles);
+        $fileBackup = $basePlugin . $id["backup"] . '/' . array_pop(preg_grep("/^(.*\.backup)/", $backFiles));
+        //var_dump($fileBackup);
+        $backupInfo = unserialize(file_get_contents($fileBackup));
+        foreach ($backupInfo["posts"] as $posts) {
+            $wpdb->replace($wpdb->prefix . "posts", $posts);
+        }
+        foreach ($backupInfo["postMeta"] as $postMeta) {
+            $wpdb->replace($wpdb->prefix . "postmeta", $postMeta);
+        }
+
+        foreach ($fileImages as $image) {
+            rename($basePlugin . $id["backup"] . '/' . $image, $backupInfo["dirBase"] . $image);
+        }
+        @unlink($fileBackup);
+        rmdir($basePlugin . $id["backup"] . '/');
+    }
+}
+
 function DNUI_get_dirs($dirBase) {
-   
+
     $out = array();
     foreach ($dirBase as $dir) {
         array_push($out, $dir);
-            $result=glob($dir . '/*', GLOB_ONLYDIR);
-            if(!empty($result)){
-               $result2=DNUI_get_dirs($result);
-               foreach ($result2 as $value) {
-                   array_push($out, $value);
-               }
+        $result = glob($dir . '/*', GLOB_ONLYDIR);
+        if (!empty($result)) {
+            $result2 = DNUI_get_dirs($result);
+            foreach ($result2 as $value) {
+                array_push($out, $value);
             }
+        }
     }
     return $out;
-    
 }
 
 function DNUI_scan_dir($dirBase) {

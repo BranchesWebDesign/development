@@ -3,8 +3,8 @@ Contributors: bbosh
 Plugin URI: http://www.brendonboshell.co.uk/thank-me-later-wordpress-plugin/
 Tags: comment, comments, email, newsletter, social
 Requires at least: 3.1
-Tested up to: 3.9
-Stable tag: 3.3
+Tested up to: 3.9.1
+Stable tag: 3.3.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,8 +16,8 @@ Thank Me Later sends 'thank you' emails to your commenters. Simply write a messa
 
 *Latest Update (3.3): Email open tracking*.
 
-Languages: Español (es_ES), Français (fr_FR), Italiano (it_IT), Polski (pl_PL), Türkçe (tr_TR), 简体中文 (zh_CN), [Translate into your language](https://www.transifex.com/projects/p/thank-me-later/)
-
+Languages: Español (es_ES), Français (fr_FR), Italiano (it_IT), Polski (pl_PL), Türkçe (tr_TR), தமிழ் (ta_LK), 简体中文 (zh_CN), [Translate into your language](https://www.transifex.com/projects/p/thank-me-later/)
+    
 = Invite readers back to your blog =
 
 Thank Me Later attracts readers back to your blog and asks them to check for replies to their comments. Other uses of the plugin include:
@@ -41,6 +41,7 @@ Follow me on Twitter: [@brendonboshell](http://twitter.com/brendonboshell)
 * **it_IT**: Manda una email di ringraziamento a chi commenta sul tuo blog.
 * **pl_PL**: Wysyłaj podziękowania za komentarz
 * **tr_TR**: Sitenize yorum yazanlara 'Teşekkürler' maili ilet.
+* **ta_LK**: உங்கள் வலைப்பதிவின் ​கருத்தாளர்களுக்கு ​ஒரு 'நன்றி' மின்னஞ்சல் அனுப்பவும்.
 
 = Translators =
 * Español (es_ES, Spanish). Thanks to [Javier Tapia Torres](http://traduccionestapia.romhackhispano.org).
@@ -48,6 +49,7 @@ Follow me on Twitter: [@brendonboshell](http://twitter.com/brendonboshell)
 * Italiano (it_IT, Italian). Thanks to [Aerendir (ecommercers.net)](http://ecommercers.net/).
 * Polski (pl_PL, Polish). Thanks to Mateusz Jaworowicz.
 * Türkçe (tr_TR, Turkish). Thanks to [adobewordpress.com](http://www.adobewordpress.com/yorumculariniza-tesekkur-postasi-yollayin).
+* தமிழ (ta_LK; Tamil): Thanks to [Mads Phikamphon](http://www.findhold.dk/).
 * 简体中文 (zh_CN, Simplified Chinese). Thanks to [@ichunxiao](http://twitter.com/ichunxiao).
 
 == Installation ==

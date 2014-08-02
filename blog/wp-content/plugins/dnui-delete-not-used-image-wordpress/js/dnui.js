@@ -14,39 +14,120 @@ _.template = function(str, data) {
 };
 
 
-/**
- * Element for tabs html of div#dnui_tabs_db
- * @type @exp;Backbone@pro;View@call;extend
- */
-
 var DnuiVGeneral=Backbone.View.extend({
     el:"div#dnui_general"
 });
 
-/**
- * Element for tabs html of div#dnui_tabs_db
- * @type @exp;Backbone@pro;View@call;extend
- */
 
-var DnuiVTabsDb=Backbone.View.extend({
-    el:"div#dnui_tabs_db"
+
+/*--------------------------------------------BACKUP---------------------------------------------------------------------*/
+
+
+var DnuiCBackupImage = Backbone.Collection.extend({
+    url:ajaxurl
 });
 
-/**
- * Element for tabs html of div#dnui_tabs_folder
- * @type @exp;Backbone@pro;View@call;extend
- */
-var DnuiVTabsFolder=Backbone.View.extend({
-    el:"div#dnui_tabs_folder"
+var DnuiCBackupSelected = Backbone.Collection.extend({
+    url:ajaxurl
 });
 
-/**
- * Element for tabs html of div#dnui_tabs_backup
- * @type @exp;Backbone@pro;View@call;extend
- */
+
+
 var DnuiVTabsBackup=Backbone.View.extend({
     el:"div#dnui_tabs_backup"
 });
+
+var DnuiVUlTabs=Backbone.View.extend({
+    el:"ul#dnui_tabs_button"
+    , events: {
+        "click .dnui_db": "db",
+        "click .dnui_bp": "bp"      
+    },db:function(){
+        this.dnuiVTableImage.render().$el.html(jQuery("#dnui_wait").html());
+        this.dnuiCImageServer.fetch({type:'POST',data:{action: "dnui_all",option:this.dnuiMOption.attributes}});
+    },bp:function(){
+       this.dnuiCBackupImage.fetch({type:'POST',data:{action: "dnui_get_backup"}});
+    }
+});
+
+var DnuiVBackupButton = Backbone.View.extend({
+ 
+    tagName:"div",
+    template: _.template(jQuery("#dnui_button_backup").html()),
+    render: function() {
+        
+       this.$el.html(this.template());
+      
+       return this;
+    },
+    events: {
+        "click .dnui_restore_backup": "restore",
+        "click .dnui_delet_backup": "delet",
+        "click .dnui_cleanup_backup": "cleanup"
+    },
+    restore:function(){
+     
+      this.dnuiCBackupSelected.fetch({type:'POST',data:{action: "dnui_restore_backup",restore:this.getSelected("input:checked.backup").toJSON()}});
+    },
+    delet:function(){
+        this.dnuiCBackupSelected.fetch({type:'POST',data:{action: "dnui_delete_backup",delet:this.getSelected("input:checked.backup").toJSON()}});
+    
+    },
+    cleanup:function(){
+        this.dnuiCBackupSelected.fetch({type:'POST',data:{action: "dnui_cleanup_backup"}});
+    
+    },
+    getSelected:function(ref){
+        
+        var dnuiCBackupSelected= new DnuiCBackupSelected();
+        jQuery(ref).each(function(index,element){
+            console.log(jQuery(element).data('id'));
+            dnuiCBackupSelected.add({backup:jQuery(element).data('id')});
+        });
+        return dnuiCBackupSelected;
+        
+    }
+    });
+    
+
+var DnuiVTableBackup=Backbone.View.extend({
+    className:"wp-list-table widefat fixed",
+   tagName:'table',
+   id:'dnui_backup',
+   template:_.template(jQuery("#dnui_table_backup").html()),
+   render:function(){
+       this.$el.html(this.template());
+       return this;
+    }
+});
+
+
+var DnuiVTbodyBackup=Backbone.View.extend({
+   tagName:'tbody',
+   template:_.template(jQuery("#dnui_tbody_backup").html()),
+   render:function(){
+       this.$el.html(this.template({backup:this.model}));
+       return this;
+    }
+});
+
+
+
+/********************************************ENDBACKUP*********************************************************************/
+
+
+/*--------------------------------------------OPTION---------------------------------------------------------------------*/
+
+/**
+ * 
+ * @type @exp;Backbone@pro;Model@call;extend
+ */
+
+var DnuiMOption = Backbone.Model.extend({
+    url:ajaxurl
+});
+
+
 
 /**
  * Element for tabs html of div#dnui_tabs_option
@@ -56,26 +137,8 @@ var DnuiVTabsOption=Backbone.View.extend({
     el:"div#dnui_tabs_option"
 });
 
-/**
- * Element for see dirs 
- * @type @exp;Backbone@pro;View@call;extend
- */
-var DnuiVSelecDir=Backbone.View.extend({
-    tagName:"select",
-    className:'rien',
-    template:_.template(jQuery("#dnui_search_dir").html()),
-    render:function(){
-        console.log(this.collection);
-       this.$el.html(this.template({dirs:this.collection}));
-       return this;
-    },
-    events:{
-        "change": "scanDir"
-    },
-    scanDir:function(evt){
-        
-    }
-});
+
+
 
 /**
  * Table html with the option
@@ -87,29 +150,66 @@ var DnuiVTableOption=Backbone.View.extend({
     tagName:'table',
      template: _.template(jQuery("#dnui_option").html()),
     render:function(){
-       this.$el.html(this.template({option:this.model.attributes}));
+       this.$el.html(this.template({option:this.dnuiMOption.attributes}));
        return this;
     },events:{
       "change .dnui_check" :"updateCheck",
       "change .dnui_select" :"updateSelect",
-      "change .dnui_cant":"updateCant"  
-    },
-        updateCheck:function(evt){
-         this.model.set(jQuery(evt.target).data("dnui"),jQuery(evt.target).attr("checked")=== 'checked'?true:false);
+      "change .dnui_cant":"updateCant",
+      "click .dnui_reset":"reset"  
+    },updateCheck:function(evt){
+         this.dnuiMOption.set(jQuery(evt.target).data("dnui"),jQuery(evt.target).attr("checked")=== 'checked'?true:false);
     },updateSelect:function(evt){
-         this.model.set(jQuery(evt.target).data("dnui"), parseInt(jQuery(evt.target).val()));
+         this.dnuiMOption.set(jQuery(evt.target).data("dnui"), parseInt(jQuery(evt.target).val()));
     },updateCant: function(evt){
         var cant=jQuery(evt.target).val();
-        if(cant<this.collection.length){
-            this.model.set("cantInPage",jQuery(evt.target).val());
-        }else if(this.collection.length==this.model.get("cantInPage")){
-             this.model.set("cantInPage",jQuery(evt.target).val());
+        if(cant<this.dnuiCImageServer.length){
+            this.dnuiMOption.set("cantInPage",jQuery(evt.target).val());
+        }else if(this.dnuiCImageServer.length==this.dnuiMOption.get("cantInPage")){
+             this.dnuiMOption.set("cantInPage",jQuery(evt.target).val());
         }
         else{
-            this.model.set({cantInPage : cant},{silent: true});
+            this.dnuiMOption.set({cantInPage : cant},{silent: true});
         }
+    },reset:function(evt){
+        this.dnuiMOption.set(jQuery(evt.target).data("dnui"),0);
+        this.dnuiVUlTabs.db();
     }
 });
+
+
+
+/********************************************ENDOPTION*********************************************************************/
+
+
+/*--------------------------------------------SEARCH---------------------------------------------------------------------*/
+
+
+/**
+ * 
+ * @type @exp;Backbone@pro;Collection@call;extend
+ */
+var DnuiCImageDeleted = Backbone.Collection.extend({
+    url:ajaxurl
+});
+
+
+
+/**
+ * 
+ * @type @exp;Backbone@pro;Collection@call;extend
+ */
+var DnuiCImageServer = Backbone.Collection.extend({
+    url:ajaxurl
+});
+
+
+
+
+var DnuiVTabsDb=Backbone.View.extend({
+    el:"div#dnui_tabs_db"
+});
+
 
 /**
  * Show the table with all image search in the database 
@@ -117,7 +217,6 @@ var DnuiVTableOption=Backbone.View.extend({
  */
 
 var DnuiVTableImage = Backbone.View.extend({
-    
     className:"wp-list-table widefat fixed",
     tagName:"table",
     template: _.template(jQuery("#dnui_table").html()),
@@ -138,11 +237,14 @@ var DnuiVTableImage = Backbone.View.extend({
                 jQuery(input).prop("checked", !jQuery(input).prop("checked"));
             }
             evt.target=input;
-            self.father(evt);
+            father(evt);
 
         });
     }
 });
+
+
+
 
 /**
  * 
@@ -157,8 +259,14 @@ var DnuiVTbody=Backbone.View.extend({
     },
     events: {
         "click .dnui_father" : "father"
-    },
-    father :function(evt){
+    },father :function(evt){
+        father(evt);
+    }
+    
+    
+});
+
+function father(evt){
         
         var id=jQuery(evt.target).data("id");
 
@@ -187,8 +295,6 @@ var DnuiVTbody=Backbone.View.extend({
     }
    
     }
-    
-});
 
 /**
  * 
@@ -199,7 +305,7 @@ var DnuiVTableButton = Backbone.View.extend({
     tagName:"div",
     template: _.template(jQuery("#dnui_button").html()),
     render: function() {
-       this.$el.html(this.template());
+       this.$el.html(this.template({option:this.dnuiMOption,lastValue:this.dnuiCImageServer.length}));
        return this;
     },
     events: {
@@ -208,15 +314,15 @@ var DnuiVTableButton = Backbone.View.extend({
         "click .dnui_delete": "deleteSelectd"
     },
     next: function() {
-        if(this.collection.length== this.model.option.get("cantInPage")){
-              this.model.option.set("numberOfPage", this.model.option.get("numberOfPage") + 1);
-        }
-      
+              
+              this.dnuiMOption.set("page", this.dnuiMOption.get("page") + 1);
+              this.dnuiVUlTabs.db();
     },
     before: function() {
-        if (this.model.option.get("numberOfPage") > 0)
-            this.model.option.set("numberOfPage", this.model.option.get("numberOfPage") - 1);
-
+            if(this.dnuiMOption.get("page")>=1){
+               this.dnuiMOption.set("page", this.dnuiMOption.get("page") - 1);
+                this.dnuiVUlTabs.db(); 
+            }
     },
     deleteSelectd: function(evt) {
         var imageToDelete={};
@@ -237,63 +343,53 @@ var DnuiVTableButton = Backbone.View.extend({
             
          imageToDelete=_.compact(imageToDelete);
   
-         this.model.imageDeleted.fetch({type:"POST",data:{action: "dnui_delete",imageToDelete:imageToDelete,updateInServer:this.model.option.get("updateInServer")}});
+         this.dnuiCImageDeleted.fetch({type:"POST",data:{action: "dnui_delete",imageToDelete:imageToDelete,updateInServer:this.dnuiMOption.get("updateInServer")}});
          }
      }
 });
-/**
- * 
- * @type @exp;Backbone@pro;Collection@call;extend
- */
-var DnuiCImageDeleted = Backbone.Collection.extend({
-    url:ajaxurl
-});
 
 
-var DnuiCDirsImage = Backbone.Collection.extend({
-    url:ajaxurl
-});
 
-/**
- * 
- * @type @exp;Backbone@pro;Collection@call;extend
- */
-var DnuiCImageServer = Backbone.Collection.extend({
-    url:ajaxurl
-});
-/**
- * 
- * @type @exp;Backbone@pro;Model@call;extend
- */
 
-var DnuiMOption = Backbone.Model.extend({
-    url:ajaxurl
-});
+/********************************************ENDSEARCH*********************************************************************/
+
+
+
 
 jQuery(document).ready(function() {
     
-    /*
-   var dnuiCDirsImage= new DnuiCDirsImage(); 
+   var dnuiCBackupImage= new DnuiCBackupImage(); 
+   var dnuiVBackupButton=new DnuiVBackupButton();
+   var dnuiVTabsBackup= new DnuiVTabsBackup();
+   var dnuiVTableBackup = new DnuiVTableBackup();
    
-   var dnuiVTabsFolder= new DnuiVTabsFolder();
-   
-   
-   var dnuiVSelecDir = new DnuiVSelecDir({collection:dnuiCDirsImage});
-   dnuiVTabsFolder.$el.append( dnuiVSelecDir.render().$el);
-   
-    dnuiVSelecDir.listenTo(dnuiCDirsImage,"sync", function(){
-        console.log(dnuiCDirsImage);
-        console.log("something");
-        dnuiVSelecDir.render();
-    });
-   
-   
-   dnuiCDirsImage.fetch({type:'POST',data:{action: "dnui_get_dirs"}});
-    */
-    
-   var dnuiCImageServer= new DnuiCImageServer();
-
    var dnuiMOption = new DnuiMOption(); 
+    
+   var dnuiVUlTabs= new DnuiVUlTabs();
+   dnuiVUlTabs.dnuiCBackupImage=dnuiCBackupImage;
+   dnuiVUlTabs.dnuiMOption=dnuiMOption;
+   
+   
+   
+   dnuiVTabsBackup.$el.append(dnuiVBackupButton.render().el);
+   dnuiVTabsBackup.$el.append(dnuiVTableBackup.render().el);
+  
+   dnuiVTableBackup.listenTo(dnuiCBackupImage,"sync", function(){
+        dnuiVTableBackup.render();
+        dnuiCBackupImage.forEach(function(backup){
+            var dnuiVTbodyBackup= new DnuiVTbodyBackup({model:backup.attributes});
+           
+            
+            dnuiVTableBackup.$el.append(dnuiVTbodyBackup.render().el);
+            
+        });
+
+      
+    });
+        
+   var dnuiCImageServer= new DnuiCImageServer();
+    dnuiVUlTabs.dnuiCImageServer=dnuiCImageServer;
+   
     
     var dnuiCImageDeleted= new DnuiCImageDeleted();
     /*
@@ -302,20 +398,33 @@ jQuery(document).ready(function() {
    var dnuiVTabsDb= new DnuiVTabsDb();
    var dnuiVTableImage= new DnuiVTableImage();
    
-   var dnuiVTableButton1 = new DnuiVTableButton({collection:dnuiCImageServer,model:{option:dnuiMOption,imageDeleted:dnuiCImageDeleted}});
-   var dnuiVTableButton2 = new DnuiVTableButton({collection:dnuiCImageServer,model:{option:dnuiMOption,imageDeleted:dnuiCImageDeleted}});
+   dnuiVUlTabs.dnuiVTableImage=dnuiVTableImage;
+   var dnuiVTableButton1 = new DnuiVTableButton();
+   dnuiVTableButton1.dnuiCImageServer=dnuiCImageServer;
+   dnuiVTableButton1.dnuiMOption=dnuiMOption;
+   dnuiVTableButton1.dnuiCImageDeleted=dnuiCImageDeleted;
+   dnuiVTableButton1.dnuiVUlTabs=dnuiVUlTabs;
+   
+   var dnuiVTableButton2 = new DnuiVTableButton();
+   dnuiVTableButton2.dnuiCImageServer=dnuiCImageServer;
+   dnuiVTableButton2.dnuiMOption=dnuiMOption;
+   dnuiVTableButton2.dnuiCImageDeleted=dnuiCImageDeleted;
+   dnuiVTableButton2.dnuiVUlTabs=dnuiVUlTabs;
    
    dnuiVTableButton1.render();
    dnuiVTableButton2.render();
-   dnuiVTabsDb.$el.append(dnuiVTableButton1.el);
-   dnuiVTabsDb.$el.append(dnuiVTableImage.render().el);
-   dnuiVTabsDb.$el.append(dnuiVTableButton2.el);
+   
    var dnuiVTabsOption= new DnuiVTabsOption();
-   var dnuiVTableOption= new DnuiVTableOption({model:dnuiMOption, collection:dnuiCImageServer});
+   var dnuiVTableOption= new DnuiVTableOption();
+   dnuiVTableOption.dnuiMOption=dnuiMOption;
+   dnuiVTableOption.dnuiCImageServer=dnuiCImageServer;
+   dnuiVTableOption.dnuiVUlTabs=dnuiVUlTabs;
    dnuiVTabsOption.$el.append(dnuiVTableOption.render().el);
    
    var dnuiVGeneral= new DnuiVGeneral();
    dnuiVGeneral.$el.tabs();
+   
+  
    
    /*
     *Update the view with the new option,  
@@ -323,33 +432,49 @@ jQuery(document).ready(function() {
    dnuiVTableOption.listenTo(dnuiMOption,"sync", function(){
         dnuiVTableOption.render();
     });
-   
+   /*
    dnuiCImageServer.listenTo(dnuiMOption,"change", function(){
-          if(dnuiMOption.get("scan")){
-            dnuiCImageServer.fetch({type:'POST',data:{action: "dnui_all",option:dnuiMOption.attributes}});
-          }
+          
+          dnuiCImageServer.fetch({type:'POST',data:{action: "dnui_all",option:dnuiMOption.attributes}});
     });
-    
+    */
     dnuiVTableImage.listenTo(dnuiCImageServer,"sync", function(){
-        dnuiVTableImage.render();
+        dnuiVTableButton1.render();
+        dnuiVTableButton2.render();
+        dnuiVTabsDb.$el.append(dnuiVTableButton1.el);
+        dnuiVTabsDb.$el.append(dnuiVTableImage.render().el);
+        dnuiVTabsDb.$el.append(dnuiVTableButton2.el);
+        dnuiVTableOption.render();
         dnuiCImageServer.forEach(function(image){
             var dnuiVTbody= new DnuiVTbody({id:image.id, model:image.attributes});
             dnuiVTbody.render();
             dnuiVTableImage.$el.append(dnuiVTbody.el);
             
         });
-        
     });
     
     dnuiCImageDeleted.listenTo(dnuiCImageDeleted,"sync", function(){
+       dnuiVTableImage.render().$el.html("");
        if( dnuiCImageDeleted.at(0).get("isOk")){
-          dnuiMOption.trigger("change");
+          dnuiVUlTabs.db();
        }
         
     });
+    
+    var dnuiCBackupSelected= new DnuiCBackupSelected();
+    dnuiVBackupButton.dnuiCBackupSelected=dnuiCBackupSelected;
+    dnuiVUlTabs.listenTo(dnuiCBackupSelected,"sync", function(){
+        dnuiVUlTabs.bp();
+    });
+    
+    
+    
    /*
     * Get the options from the database
     */
-   dnuiMOption.fetch({type:'GET',data:{action:'dnui_get_option'}});
+   dnuiMOption.fetch({type:'GET',data:{action:'dnui_get_option',success:function(){
+              dnuiVUlTabs.db();
+   }}});
+   
 });
 

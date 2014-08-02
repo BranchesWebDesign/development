@@ -4,7 +4,7 @@ Donate link: http://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 2.8
 Tested up to: 3.9.1
-Stable tag: 4.3
+Stable tag: 4.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,10 @@ A tutorial and a short demo is available here: [Google Analytics Dashboard video
 
 == Frequently Asked Questions == 
 
+=  Google Analytics -> General Settings is empty or a fatal error is displayed =
+
+That's because there is a conflict with another plugin (usually other analytics plugins). To solve this issue you need to disable the plugin that conflicts with GADWP. Most common conflicts are occurring because: the plugins have different versions of same library or just because some plugins don't load the libraries properly.
+
 = I have several wordpress websites do I need an API Project for each one? =
 
 No, you don't. You can use the same API Project (same API Key, Client Secret and Client ID) for all your websites.
@@ -110,6 +114,17 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 
 == Changelog ==
 
+= v4.3.1 =
+- bugfix: link on top referrers list not working
+- bugfix: profiles refresh issue
+- bugfix: multiple fixes for network mode
+- tweak: remove table borders on frontend widget
+- allowing today as default stats
+- updated GAPI libarry
+- using autloader for PHP 5.3.0 and greater
+- security improvements
+- tracking code update
+
 = v4.3 =
 - responsive Google Charts
 - single authorization for multisite
@@ -118,7 +133,7 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 - additional data validation and sanitizing
 - bugfix: realtime switching profile functionality
 - multisite: blog's cleanup on uninstall
-- depricating custom tracking code
+- deprecating custom tracking code
 
 = v4.2.21 =
 - added hungarian translation

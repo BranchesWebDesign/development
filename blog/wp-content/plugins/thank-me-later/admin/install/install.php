@@ -35,22 +35,9 @@ $continue_url = "?page=" . urlencode(stripslashes($_REQUEST["page"]))
 		
 		<form id="bbpp_thankmelater_install" action="<?php echo esc_attr($url); ?>" method="post">
 		
-		<p><label><input 
-				type="checkbox" 
-				name="bbpp_thankmelater_share_data" 
-				value="1"<?php if ($share_data) { echo " checked=\"checked\""; } ?>>
-		
-			<?php echo __("Share usage data with the plugin developer*", "bbpp-thankmelater"); ?>
-			</label></p>
-		
 			<?php wp_nonce_field("bbpp_thankmelater_install"); ?>
 			<?php submit_button(__("Enable Email Open Tracking", "bbpp-thankmelater"), "primary", "submit", false); ?>
 			<a class="button" href="<?php echo esc_attr($continue_url); ?>">Do not enable</a> 
 		</form>
 	
 	</div>
-
-<p><?php echo __("* The following information will be shared: "
-		. "your domain name, the number of emails sent and the number of emails opened. "
-		. "User details, such as email addresses, are never included. "
-		. "This information will help me plan for future features.", "bbpp-thankmelater"); ?></p>

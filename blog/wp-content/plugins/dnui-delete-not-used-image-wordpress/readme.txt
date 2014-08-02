@@ -4,13 +4,14 @@ Donate link: http://www.nicearma.com/
 Tags: image, cleanup, images, delete, image not used, image unused, delete unused image, delete not used image, cleanup image
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 1.1.2
+Stable tag: 1.3.1
 
 Delete and update not used image and database
  
 == Description ==
 
 The plugin is back!!
+If you have some problem after the update, please deactivate and active the plugin again!
 
 This plugin will help you to find all in the database and all the images that are not being used/unused and give you the oportunity to clean up the database and space.
 
@@ -51,17 +52,4 @@ The hard way :
 = Why you have to make a backup  =
 
 Well if better have some return point if something is wrong
-
-== Changelog ==
-
-= 1.1.1 =
-Add in all array() for php 5.3
-
-= 1.1 =
-Add select all
-Add array() for php 5.3
-
-= 1.0 =
-* Change of logic, server side and js
-
 

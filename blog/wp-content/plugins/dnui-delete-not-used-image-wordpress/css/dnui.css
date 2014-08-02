@@ -5,7 +5,7 @@ table tbody tr.dnui_original{
 table tbody tr.dnui_sons:nth-child(even){
      background-color: #FFFFFF;
 }
-
+ 
 table tbody tr.dnui_sons:nth-child(odd){
     
     background-color: #EEEEEE;
@@ -18,6 +18,10 @@ table tbody tr.dnui_sons:nth-child(odd){
 
 .dnui .not-use{
     color: #c50000;
+}
+
+.right{
+    float: right;
 }
 
 

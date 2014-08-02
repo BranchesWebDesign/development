@@ -45,8 +45,6 @@ class Bbpp_ThankMeLater_Upgrade3_3 {
 		// show installation screen
 		update_option("bbpp_thankmelater_show_install_screen", true);
 		
-		add_option("bbpp_thankmelater_share_data", "0", NULL, TRUE);
-		
 		// Update version number
 		delete_option("bbpp_thankmelater_version");
 		add_option("bbpp_thankmelater_version", "3.3", NULL, TRUE);

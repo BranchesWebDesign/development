@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="http://www.brancheswebsolutions.com/blog/wp-content/plugins/sitemap-generator-for-webmasters/sitemap.xsl"?><!-- generator="wordpress/3.9.1" -->
 <!-- sitemap-generator-url="http://www.iwebslog.com" sitemap-generator-version="1.5" -->
-<!-- generated-on="July 21, 2014 1:29 AM" -->
+<!-- generated-on="July 28, 2014 7:16 AM" -->
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">	<url>
 		<loc>http://www.brancheswebsolutions.com/blog/</loc>
-		<lastmod>2014-07-19T11:05:13+00:00</lastmod>
+		<lastmod>2014-07-28T07:16:33+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>http://www.brancheswebsolutions.com/blog/2014/07/28/11-server-4i-managed/</loc>
+		<lastmod>2014-07-28T07:16:33+00:00</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.2</priority>
 	</url>
 	<url>
 		<loc>http://www.brancheswebsolutions.com/blog/2014/07/19/best-website-concept-of-2014-how2forfree-com/</loc>
@@ -936,7 +942,7 @@
 	</url>
 	<url>
 		<loc>http://www.brancheswebsolutions.com/blog/2014/07/</loc>
-		<lastmod>2014-07-19T11:05:13+00:00</lastmod>
+		<lastmod>2014-07-28T07:16:33+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
@@ -966,7 +972,7 @@
 	</url>
 	<url>
 		<loc>http://www.brancheswebsolutions.com/blog/author/blogbrancheswebsolutions-com/</loc>
-		<lastmod>2014-07-19T07:26:52+00:00</lastmod>
+		<lastmod>2014-07-28T07:16:33+00:00</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.3</priority>
 	</url>

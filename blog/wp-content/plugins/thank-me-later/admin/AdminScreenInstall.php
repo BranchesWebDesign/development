@@ -44,23 +44,16 @@ class Bbpp_ThankMeLater_AdminScreenInstall {
 		
 		$errors = array();
 		$success = false;
-		$share_data = get_option("bbpp_thankmelater_share_data", "0");
 		
 		if ($_POST) {
 			check_admin_referer("bbpp_thankmelater_install");
 			$data = stripslashes_deep($_POST);
-			$share_data = isset($data["bbpp_thankmelater_share_data"]) ? $data["bbpp_thankmelater_share_data"] : "0";
 			
 			$error = new WP_Error();
-			
-			if (!in_array($share_data, array("0", "1"))) {
-				$error->add("share_data", __("You must select an option.", "bbpp-thankmelater"));
-			}
 			
 			if ($error->get_error_codes()) {
 				$errors[] = $error;
 			} else {
-				update_option("bbpp_thankmelater_share_data", $share_data);
 				update_option("bbpp_thankmelater_show_install_screen", false);
 				
 				// enable email tracking

@@ -4,7 +4,7 @@ Plugin Name: Thank Me Later
 Plugin URI: http://www.brendonboshell.co.uk/thank-me-later-wordpress-plugin/
 Description: Send a 'thank you' email to your blog's commenters.
 Author: Brendon Boshell
-Version: 3.3
+Version: 3.3.1
 Author URI: http://www.brendonboshell.co.uk/
 Text Domain: bbpp-thankmelater
 Domain Path: /languages/
@@ -532,9 +532,6 @@ class Bbpp_ThankMeLater_Plugin {
 		", $comment_id, $date_gmt));
 			
 		
-		if (get_option("bbpp_thankmelater_share_data")) {
-			file_get_contents("http://brendonboshell.co.uk/thank-me-later-data/open.php?url=" . urlencode(get_site_url()));
-		}
 			
 		header("Content-Type: image/png");
 		echo file_get_contents(BBPP_THANKMELATER_PLUGIN_PATH . "/imgs/pixel.gif");

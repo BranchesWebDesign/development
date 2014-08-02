@@ -1,8 +1,8 @@
 <?php
-
+ 
 /*
   Plugin Name: DNUI (Delete not used images)
-  Version: 1.2
+  Version: 1.3.1
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
@@ -24,18 +24,21 @@ add_action('admin_menu', 'DNUI_option_menu');
 
 function DNUI_option_menu() {
     if (function_exists('add_options_page')) {
-        add_options_page('DNUI option', 'DNUI', 8, basename(__FILE__), 'DNUI_options');
+        add_options_page('DNUI option', 'DNUI', 8, basename(__FILE__), 'DNUI');
     }
 }
 
 function DNUI_js() {
     wp_register_style('dnui-css', plugins_url('css/dnui.css', __FILE__));
-    wp_register_script('dnui-js', plugins_url('js/dnui.js', __FILE__), array('backbone', 'jquery', 'jquery-ui-tabs'));
-    
+    wp_register_script('dnui-js-views', plugins_url('js/dnui_views.js', __FILE__), array('backbone', 'jquery', 'jquery-ui-tabs'));
+    wp_register_script('dnui-js', plugins_url('js/dnui.js', __FILE__), array('dnui-js-views'));
 }
 
-function DNUI_options() {
-    include_once 'html/table.php';
+function DNUI() {
+    include_once 'html/backup.php';
+    include_once 'html/option.php';
+    include_once 'html/tableDb.php';
+  
     add_thickbox();
     wp_enqueue_style('dnui-css');
     wp_enqueue_script('dnui-js');
@@ -44,19 +47,19 @@ function DNUI_options() {
     <p><?php _e('DNUI - Delete not used/unused image') ?></p>
    
     <div id="dnui_general">
-        <ul>
-            <li><a href="#dnui_tabs_db"><?php _e('Scan DATABASE') ?></a></li>
-            <li><a href="#dnui_tabs_folder"><?php _e('Scan FOLDER') ?></a></li>
-            <li><a href="#dnui_tabs_backup"><?php _e('Backup') ?></a></li>
-             <li><a href="#dnui_tabs_option"><?php _e('Option') ?></a></li>
+        <ul id="dnui_tabs_button">
+            <li><a class="dnui_db" href="#dnui_tabs_db"><?php _e('Scan DATABASE') ?></a></li>
+            <!--<li><a href="#dnui_tabs_folder"><?php _e('Scan FOLDER') ?></a></li>-->
+            <li><a class="dnui_bp" href="#dnui_tabs_backup"><?php _e('Backup') ?></a></li>
+             <li><a class="dnui_op" href="#dnui_tabs_option"><?php _e('Option') ?></a></li>
         </ul>
         <div class="tabDetails">
         <div id="dnui_tabs_db">
             <h1>DNUI search unused/used image in database</h1>
         </div>
-        <div id="dnui_tabs_folder">
+      <!--  <div id="dnui_tabs_folder">
              <h1>DNUI search/scan folder upload</h1>
-        </div>
+        </div>-->
         <div id="dnui_tabs_backup">
              <h1>DNUI backup</h1>
         </div>
@@ -76,7 +79,7 @@ add_action('wp_ajax_dnui_all', 'DNUI_ajax_image');
 function DNUI_ajax_image() {
     $validator=array_filter(DNUI_validator($_POST["option"]));
     if (empty($validator)){
-       $out = DNUI_getImages($_POST["option"]["numberOfPage"], $_POST["option"]["cantInPage"],$_POST["option"]["order"]);
+       $out = DNUI_getImages($_POST["option"]["page"], $_POST["option"]["cantInPage"],$_POST["option"]["order"]);
        $out= json_encode($out);
        DNUI_add_option($_POST["option"]);
     } else {
@@ -115,9 +118,7 @@ function DNUI_transform_bool(&$var){
 function DNUI_validator(&$options) {
     $validator = array();
     DNUI_transform_bool($options["updateInServer"]);
-    
-    DNUI_transform_bool($options["scan"]);
-    
+    DNUI_transform_bool($options["backup"]);
     
     if (!(is_numeric($options["order"]))) {
        array_push($validator, "order is not good");  
@@ -127,10 +128,10 @@ function DNUI_validator(&$options) {
         }
        
     }
-    if (!(is_numeric($options["numberOfPage"]) && $options["numberOfPage"] >= 0)) {
-       array_push($validator, "numberOfPage is not good"); 
+    if (!(is_numeric($options["page"]) && $options["page"] >= 0)) {
+       array_push($validator, "page is not good"); 
     }else{
-         $options["numberOfPage"]=  intval($options["numberOfPage"]);
+         $options["page"]=  intval($options["page"]);
     }
     if (!(is_numeric($options["cantInPage"]) && $options["cantInPage"] >= 0)) {
         array_push($validator, "cantInPage is not good");
@@ -172,13 +173,46 @@ function DNUI_validator(&$options) {
  
  function DNUI_install(){
      
-     $option=array('numberOfPage'=> 0,
+     $option=array('page'=> 0,
         'cantInPage'=>25,
         'updateInServer'=> true,
-        'scan'=>true,
         'order'=>0);
      DNUI_add_option($option);
      
  }
+ 
+    add_action('wp_ajax_dnui_get_backup', 'DNUI_ajax_get_backup');
+
+    function DNUI_ajax_get_backup() {
+        echo json_encode(DNUI_get_backup());
+        die();
+    }
+ 
+    
+    add_action('wp_ajax_dnui_restore_backup', 'DNUI_ajax_restore_backup');
+
+    function DNUI_ajax_restore_backup() {
+      
+        echo json_encode(DNUI_restore_backup($_POST["restore"]));
+        die();
+    }
+ 
+      
+    add_action('wp_ajax_dnui_delete_backup', 'DNUI_ajax_delete_backup');
+
+    function DNUI_ajax_delete_backup() {
+        echo json_encode(DNUI_delete_backup($_POST["delet"]));
+        die();
+    }
+ 
+    
+      
+    add_action('wp_ajax_dnui_cleanup_backup', 'DNUI_ajax_cleanup_backup');
+
+    function DNUI_ajax_cleanup_backup() {
+         echo json_encode(DNUI_cleanup_backup());
+        die();
+    }
+ 
  
  register_activation_hook( __FILE__, 'DNUI_install' );

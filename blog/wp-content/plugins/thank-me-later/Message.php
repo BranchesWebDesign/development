@@ -640,9 +640,6 @@ class Bbpp_ThankMeLater_Message {
 			}
 			
 			try {
-				if (get_option("bbpp_thankmelater_share_data")) {
-					file_get_contents("http://brendonboshell.co.uk/thank-me-later-data/send.php?url=" . urlencode(get_site_url()));
-				}
 			} catch (Exception $ex) {
 
 			}

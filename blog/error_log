@@ -37,3 +37,14 @@
 					GROUP BY apy_posts.ID
 					ORDER BY RAND() DESC LIMIT 0,1
 			 made by do_action_ref_array, call_user_func_array, CWP_TOP_Core->tweetOldPost, CWP_TOP_Core->getTweetsFromDB
+[22-Jul-2014 04:26:38 UTC] WordPress database error Unknown column 'post' in 'where clause' for query 
+				SELECT *
+				FROM apy_posts
+				LEFT JOIN apy_term_relationships ON (apy_posts.ID = apy_term_relationships.object_id)
+				WHERE 1=1
+				  AND ((post_date >= '1987-03-07 00:26:38'
+				        AND post_date <= '2014-07-15 00:26:38')) AND apy_posts.post_type IN (post)
+					  AND (apy_posts.post_status = 'publish')
+					GROUP BY apy_posts.ID
+					ORDER BY RAND() DESC LIMIT 0,1
+			 made by do_action_ref_array, call_user_func_array, CWP_TOP_Core->tweetOldPost, CWP_TOP_Core->getTweetsFromDB
